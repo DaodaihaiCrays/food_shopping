@@ -1,3 +1,5 @@
+import 'package:e_commerce/pages/onboard_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: MediaQuery.of(context).size.height / 4.3,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Color(0xFFff5c30),
                     borderRadius: BorderRadius.vertical(
                       bottom: Radius.elliptical(
                         MediaQuery.of(context).size.width,
@@ -119,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
             SizedBox(height: 20.0),
             GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 // Handle tap
 
                 String? encodeQueryParameters(Map<String, String> params) {
@@ -242,6 +244,24 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
+            ),
+            SizedBox(height: 50.0),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 6,
+                ),
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFFff5c30),
+              ),
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => OnboardPage()),
+                );
+              },
+              child: Text('Logout', style: TextStyle(fontSize: 20)),
             ),
           ],
         ),

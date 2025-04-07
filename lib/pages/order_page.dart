@@ -163,7 +163,7 @@ class _OrderPageState extends State<OrderPage> {
                       horizontal: MediaQuery.of(context).size.width / 6,
                     ),
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.black,
+                    backgroundColor: Color(0xFFff5c30),
                   ),
                   onPressed: () async {
                     var amount = double.parse(wallet!) - amount2;

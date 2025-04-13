@@ -65,4 +65,13 @@ class DatabaseMethods {
       return null;
     }
   }
+
+  Stream<QuerySnapshot> searchFoodStream(String kind, String searchField) {
+    return FirebaseFirestore.instance
+        .collection(kind)
+        .orderBy('Name')
+        .startAt([searchField])
+        .endAt([searchField + "\uf8ff"])
+        .snapshots();
+  }
 }

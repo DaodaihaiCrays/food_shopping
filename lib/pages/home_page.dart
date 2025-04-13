@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/pages/detail_page.dart';
+import 'package:e_commerce/pages/search_page.dart';
 import 'package:e_commerce/service/database.dart';
 import 'package:e_commerce/widgets/app_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool icecream = false, pizza = true, salad = false, burger = false;
+  String foodChoice = "Pizza";
   Stream? foodItemStream;
 
   onTheLoad() async {
@@ -44,7 +46,15 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailPage(detail: ds["Detail"], image: ds["Image"], name: ds["Name"], price: ds["Price"],)),
+                      MaterialPageRoute(
+                        builder:
+                            (context) => DetailPage(
+                              detail: ds["Detail"],
+                              image: ds["Image"],
+                              name: ds["Name"],
+                              price: ds["Price"],
+                            ),
+                      ),
                     );
                   },
                   child: Container(
@@ -75,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: MediaQuery.of(context).size.width / 2,
                                   child: Text(
-                                    "Honey god cheese",
+                                    ds["Detail"],
                                     style: AppWidget.lightTextStye(),
                                   ),
                                 ),
@@ -119,7 +129,15 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailPage(detail: ds["Detail"], image: ds["Image"], name: ds["Name"], price: ds["Price"],)),
+                      MaterialPageRoute(
+                        builder:
+                            (context) => DetailPage(
+                              detail: ds["Detail"],
+                              image: ds["Image"],
+                              name: ds["Name"],
+                              price: ds["Price"],
+                            ),
+                      ),
                     );
                   },
                   child: Container(
@@ -185,7 +203,15 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     margin: EdgeInsets.only(left: 10),
-                    child: Icon(Icons.shopping_cart, color: Colors.white),
+                    child: GestureDetector(
+                      onTap:() {
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SearchPage(kind: foodChoice)),
+                      );
+                      },
+                      child: Icon(Icons.search, color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -225,6 +251,8 @@ class _HomePageState extends State<HomePage> {
             burger = false;
 
             foodItemStream = await DatabaseMethods().getFoodItem("Ice-cream");
+            foodChoice = "Ice-cream";
+
             setState(() {});
           },
           child: Material(
@@ -254,6 +282,8 @@ class _HomePageState extends State<HomePage> {
             burger = false;
 
             foodItemStream = await DatabaseMethods().getFoodItem("Salad");
+            foodChoice = "Salad";
+
             setState(() {});
           },
           child: Material(
@@ -283,6 +313,7 @@ class _HomePageState extends State<HomePage> {
             icecream = false;
 
             foodItemStream = await DatabaseMethods().getFoodItem("Burger");
+            foodChoice = "Burger";
 
             setState(() {});
           },
@@ -315,6 +346,7 @@ class _HomePageState extends State<HomePage> {
             setState(() {});
 
             foodItemStream = await DatabaseMethods().getFoodItem("Pizza");
+            foodChoice = "Pizza";
           },
           child: Material(
             elevation: 5,
